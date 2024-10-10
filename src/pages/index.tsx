@@ -1,4 +1,6 @@
 import type {GetStaticProps} from 'next';
+import {useRouter} from 'next/router';
+import {Octokit} from 'octokit';
 
 type BlogDirectory = Array<{
 	name: string;
@@ -7,20 +9,25 @@ type BlogDirectory = Array<{
 }>;
 
 export const getStaticProps = (async () => {
-	const data = await fetch(
-		'https://api.github.com/repos/navelorange1999/blog-database/contents/markdowns'
-	);
-	const result = (await data.json()) as Array<{
-		name: string;
-		path: string;
-	}>;
+	const octokit = new Octokit({
+		auth: process.env.GITHUB_TOKEN,
+	});
 
-	const directory: BlogDirectory =
-		result?.map((item) => ({
-			name: item.name,
-			path: item.path,
-			count: 0,
-		})) ?? [];
+	const result = await octokit.rest.repos.getContent({
+		owner: process.env.REPO_OWNER,
+		repo: process.env.BLOG_REPO,
+		path: process.env.BLOG_ROOT,
+	});
+
+	console.log('result', result);
+
+	const directory: BlogDirectory = Array.isArray(result?.data)
+		? (result?.data?.map((item) => ({
+				name: item.name,
+				path: item.path,
+				count: 0,
+			})) ?? [])
+		: [];
 
 	return {props: {directory}};
 }) satisfies GetStaticProps<{
@@ -28,11 +35,13 @@ export const getStaticProps = (async () => {
 }>;
 
 export default function Home({directory}: {directory: BlogDirectory}) {
+	const router = useRouter();
+
 	return (
 		<ul>
 			{directory.map((item) => (
 				<li key={item.path}>
-					{item.name} ({item.count})
+					{item.name} - {router.query.slug} ({item.count})
 				</li>
 			))}
 		</ul>
