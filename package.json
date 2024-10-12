@@ -11,12 +11,15 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "memory-cache": "^0.2.0",
     "next": "14.2.13",
     "octokit": "^4.0.2",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-markdown": "^9.0.1"
   },
   "devDependencies": {
+    "@types/memory-cache": "^0.2.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
