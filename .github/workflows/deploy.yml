@@ -2,12 +2,16 @@
 #
 # To get started with Next.js see: https://nextjs.org/docs/getting-started
 #
-name: Deploy Next.js site to Pages
+name: Deploy
 
 on:
-    # Runs on pushes targeting the default branch
-    push:
-        branches: ['master']
+    # Trigger the workflow on databse-release event
+    repository_dispatch:
+        types: [database-release]
+
+    # Trigger the workflow on published
+    release:
+        types: [published]
 
     # Allows you to run this workflow manually from the Actions tab
     workflow_dispatch:
