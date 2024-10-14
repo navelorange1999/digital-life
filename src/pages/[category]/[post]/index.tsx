@@ -1,5 +1,8 @@
 import {Octokit} from 'octokit';
 import Markdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
+import Image from 'next/image';
 
 import {getBlogDirectory} from '@/utils/getBlogDirectory';
 
@@ -86,7 +89,25 @@ export const getStaticProps = async ({
 const Post = ({post, encoding}: {post: string; encoding: BufferEncoding}) => {
 	const markdown = Buffer.from(post, encoding).toString();
 
-	return <Markdown>{markdown}</Markdown>;
+	return (
+		<Markdown
+			components={{
+				img: ({src, alt}) => (
+					<Image
+						width={400}
+						height={200}
+						referrerPolicy="no-referrer"
+						src={src ?? ''}
+						alt={alt ?? ''}
+					/>
+				),
+			}}
+			remarkPlugins={[[remarkGfm]]}
+			rehypePlugins={[rehypeRaw]}
+		>
+			{markdown}
+		</Markdown>
+	);
 };
 
 export default Post;
