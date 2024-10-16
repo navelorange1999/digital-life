@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Heading from 'next/head';
 import {useRouter} from 'next/router';
 
 import {BlogDirectory, getBlogDirectory} from '@/utils/getBlogDirectory';
@@ -47,18 +48,36 @@ export const getStaticProps = async ({
 const Category = ({posts}: {posts: BlogDirectory}) => {
 	const router = useRouter();
 
+	const category = router.query.category as string;
+
+	// first letter to uppercase
+	const categoryTitle = category.charAt(0).toUpperCase() + category.slice(1);
+
 	return (
-		<ul>
-			{posts.map((item) => (
-				<li key={item.slug}>
-					<Link
-						href={`/${router.query.category}/${encodeURIComponent(item.slug)}`}
-					>
-						{item.name}
-					</Link>
-				</li>
-			))}
-		</ul>
+		<div>
+			<Heading>
+				<title>{`${categoryTitle} | navelorange1999 blog`}</title>
+				<meta
+					name="title"
+					content={`${categoryTitle} | navelorange1999 blog`}
+				/>
+				<meta
+					name="description"
+					content={`navelorange1999's posts on ${categoryTitle}`}
+				/>
+			</Heading>
+			<ul>
+				{posts.map((item) => (
+					<li key={item.slug}>
+						<Link
+							href={`/${category}/${encodeURIComponent(item.slug)}`}
+						>
+							{item.name}
+						</Link>
+					</li>
+				))}
+			</ul>
+		</div>
 	);
 };
 

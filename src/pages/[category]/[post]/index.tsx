@@ -1,8 +1,13 @@
 import {Octokit} from 'octokit';
+import Image from 'next/image';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
-import Image from 'next/image';
+import rehypeHighlight from 'rehype-highlight';
+import rehypeTOC from '@jsdevtools/rehype-toc';
+import rehypeSlug from 'rehype-slug';
+import markdownMetadataParser from 'markdown-yaml-metadata-parser';
+import Heading from 'next/head';
 
 import {getBlogDirectory} from '@/utils/getBlogDirectory';
 
@@ -87,26 +92,47 @@ export const getStaticProps = async ({
 };
 
 const Post = ({post, encoding}: {post: string; encoding: BufferEncoding}) => {
-	const markdown = Buffer.from(post, encoding).toString();
+	const {metadata, content} = markdownMetadataParser(
+		Buffer.from(post, encoding).toString()
+	);
 
 	return (
-		<Markdown
-			components={{
-				img: ({src, alt}) => (
-					<Image
-						width={400}
-						height={200}
-						referrerPolicy="no-referrer"
-						src={src ?? ''}
-						alt={alt ?? ''}
-					/>
-				),
-			}}
-			remarkPlugins={[[remarkGfm]]}
-			rehypePlugins={[rehypeRaw]}
-		>
-			{markdown}
-		</Markdown>
+		<div>
+			<Heading>
+				<title>{metadata.title}</title>
+				<meta key="title" name="title" content={metadata.title} />
+				<meta
+					key="description"
+					name="description"
+					content={metadata.description}
+				/>
+			</Heading>
+			<h1>{metadata.title}</h1>
+			<Markdown
+				components={{
+					img: ({src, alt}) => (
+						<Image
+							layout="responsive"
+							width={400}
+							height={300}
+							objectFit="contain"
+							referrerPolicy="no-referrer"
+							src={src ?? ''}
+							alt={alt ?? ''}
+						/>
+					),
+				}}
+				remarkPlugins={[remarkGfm]}
+				rehypePlugins={[
+					rehypeRaw,
+					rehypeSlug,
+					rehypeTOC,
+					rehypeHighlight,
+				]}
+			>
+				{content}
+			</Markdown>
+		</div>
 	);
 };
 
