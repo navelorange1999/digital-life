@@ -42,7 +42,7 @@ export const getStaticProps = async ({
 
 	const posts = await getBlogDirectory(databasePath);
 
-	return {props: {posts}};
+	return {props: {category: params.category, posts}};
 };
 
 const Category = ({posts}: {posts: BlogDirectory}) => {
@@ -57,6 +57,7 @@ const Category = ({posts}: {posts: BlogDirectory}) => {
 		<div>
 			<Heading>
 				<title>{`${categoryTitle} | Blog - navelorange1999`}</title>
+				<meta name="keywords" content={category} />
 				<meta
 					name="title"
 					content={`${categoryTitle} | Blog - navelorange1999`}

@@ -23,7 +23,6 @@ export default function Document() {
 				/>
 				<link rel="manifest" href="/site.webmanifest" />
 				<link rel="shortcut icon" href="/favicon/favicon.ico" />
-				<title>Blog - navelorange1999</title>
 				<meta name="title" content="Blog - navelorange1999" />
 			</Head>
 			<body>

@@ -7,6 +7,7 @@ import rehypeTOC from '@jsdevtools/rehype-toc';
 import rehypeSlug from 'rehype-slug';
 import markdownMetadataParser from 'markdown-yaml-metadata-parser';
 import Heading from 'next/head';
+import {useRouter} from 'next/router';
 
 import {getBlogDirectory} from '@/utils/getBlogDirectory';
 
@@ -95,20 +96,25 @@ const Post = ({post, encoding}: {post: string; encoding: BufferEncoding}) => {
 		Buffer.from(post, encoding).toString()
 	);
 
+	const router = useRouter();
+
+	// match content first image by regex
+	const cover: string = content.match(/!\[.*?\]\((.*?)\)/)?.[1];
+
 	return (
 		<div>
 			<Heading>
 				<title>{`${metadata.title} | Blog - navelorange1999`}</title>
 				<meta
-					key="title"
+					name="keywords"
+					content={router.query.category as string}
+				/>
+				<meta
 					name="title"
 					content={`${metadata.title} | Blog - navelorange1999`}
 				/>
-				<meta
-					key="description"
-					name="description"
-					content={metadata.description}
-				/>
+				<meta name="description" content={metadata.description} />
+				<meta title="og:image" content={cover} />
 			</Heading>
 			<h1>{metadata.title}</h1>
 			<Markdown
