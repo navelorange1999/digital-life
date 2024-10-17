@@ -1,5 +1,4 @@
 import {Octokit} from 'octokit';
-import Image from 'next/image';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
@@ -99,8 +98,12 @@ const Post = ({post, encoding}: {post: string; encoding: BufferEncoding}) => {
 	return (
 		<div>
 			<Heading>
-				<title>{metadata.title}</title>
-				<meta key="title" name="title" content={metadata.title} />
+				<title>{`${metadata.title} | Blog - navelorange1999`}</title>
+				<meta
+					key="title"
+					name="title"
+					content={`${metadata.title} | Blog - navelorange1999`}
+				/>
 				<meta
 					key="description"
 					name="description"
@@ -111,11 +114,7 @@ const Post = ({post, encoding}: {post: string; encoding: BufferEncoding}) => {
 			<Markdown
 				components={{
 					img: ({src, alt}) => (
-						<Image
-							layout="responsive"
-							width={400}
-							height={300}
-							objectFit="contain"
+						<img
 							referrerPolicy="no-referrer"
 							src={src ?? ''}
 							alt={alt ?? ''}

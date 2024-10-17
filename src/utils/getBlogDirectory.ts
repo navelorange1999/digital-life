@@ -1,5 +1,6 @@
 import {Octokit} from 'octokit';
 import cache from 'memory-cache';
+import {createHash} from 'node:crypto';
 
 type Path = string;
 
@@ -34,7 +35,9 @@ export const getBlogDirectory = async (path = '') => {
 	const directory: BlogDirectory = Array.isArray(result?.data)
 		? (result?.data?.map((item) => {
 				const slug =
-					item?.type === 'file' ? item.sha : item.name.toLowerCase();
+					item?.type === 'file'
+						? createHash('md5').update(item.name).digest('hex')
+						: item.name.toLowerCase();
 
 				return {
 					slug,

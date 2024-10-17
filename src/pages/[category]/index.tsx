@@ -56,10 +56,10 @@ const Category = ({posts}: {posts: BlogDirectory}) => {
 	return (
 		<div>
 			<Heading>
-				<title>{`${categoryTitle} | navelorange1999 blog`}</title>
+				<title>{`${categoryTitle} | Blog - navelorange1999`}</title>
 				<meta
 					name="title"
-					content={`${categoryTitle} | navelorange1999 blog`}
+					content={`${categoryTitle} | Blog - navelorange1999`}
 				/>
 				<meta
 					name="description"

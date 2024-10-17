@@ -6,6 +6,7 @@
     "cz": "git cz",
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky"
@@ -16,6 +17,7 @@
     "markdown-yaml-metadata-parser": "^3.0.0",
     "memory-cache": "^0.2.0",
     "next": "14.2.13",
+    "next-sitemap": "^4.2.3",
     "octokit": "^4.0.2",
     "react": "^18",
     "react-dom": "^18",
