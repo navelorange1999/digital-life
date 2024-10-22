@@ -87,15 +87,13 @@ jobs:
             - name: Build with Next.js
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  NEXT_PUBLIC_POSTHOG_KEY: ${{ secrets.NEXT_PUBLIC_POSTHOG_KEY }}
                   REPO_OWNER: ${{ vars.REPO_OWNER }}
                   BLOG_REPO: ${{ vars.BLOG_REPO }}
                   BLOG_ROOT: ${{ vars.BLOG_ROOT }}
+                  NEXT_PUBLIC_POSTHOG_HOST: ${{ vars.POSTHOG_HOST }}
 
-              run: |
-                  echo "REPO_OWNER : $REPO_OWNER"
-                  echo "BLOG_REPO : $BLOG_REPO"
-                  echo "BLOG_ROOT : $BLOG_ROOT"
-                  ${{ steps.detect-package-manager.outputs.runner }} next build
+              run: ${{ steps.detect-package-manager.outputs.runner }} next build
 
             - name: Upload artifact
               uses: actions/upload-pages-artifact@v3
