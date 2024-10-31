@@ -93,7 +93,7 @@ jobs:
                   BLOG_ROOT: ${{ vars.BLOG_ROOT }}
                   NEXT_PUBLIC_POSTHOG_HOST: ${{ vars.POSTHOG_HOST }}
 
-              run: ${{ steps.detect-package-manager.outputs.runner }} next build
+              run: ${{ steps.detect-package-manager.outputs.runner }} yarn build
 
             - name: Upload artifact
               uses: actions/upload-pages-artifact@v3
