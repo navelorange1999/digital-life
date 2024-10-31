@@ -92,6 +92,7 @@ jobs:
                   REPO_OWNER: ${{ vars.REPO_OWNER }}
                   BLOG_REPO: ${{ vars.BLOG_REPO }}
                   BLOG_ROOT: ${{ vars.BLOG_ROOT }}
+                  HOST: ${{vars.HOST}}
                   NEXT_PUBLIC_POSTHOG_HOST: ${{ vars.POSTHOG_HOST }}
 
             - name: Upload artifact
