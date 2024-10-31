@@ -85,6 +85,7 @@ jobs:
               run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
             - name: Build with Next.js
+              run: yarn build
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   NEXT_PUBLIC_POSTHOG_KEY: ${{ secrets.NEXT_PUBLIC_POSTHOG_KEY }}
@@ -92,8 +93,6 @@ jobs:
                   BLOG_REPO: ${{ vars.BLOG_REPO }}
                   BLOG_ROOT: ${{ vars.BLOG_ROOT }}
                   NEXT_PUBLIC_POSTHOG_HOST: ${{ vars.POSTHOG_HOST }}
-
-              run: ${{ steps.detect-package-manager.outputs.runner }} yarn build
 
             - name: Upload artifact
               uses: actions/upload-pages-artifact@v3
