@@ -22,6 +22,7 @@ export default function Home({directory}: {directory: BlogDirectory}) {
 					content={directory.map(({name}) => name).join(',')}
 				/>
 			</Heading>
+			<h1>Blog - navelorange1999</h1>
 			<ul>
 				{directory.map((item) => (
 					<li key={item.slug}>

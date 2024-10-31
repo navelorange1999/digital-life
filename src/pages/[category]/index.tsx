@@ -53,6 +53,8 @@ const Category = ({posts}: {posts: BlogDirectory}) => {
 	// first letter to uppercase
 	const categoryTitle = category.charAt(0).toUpperCase() + category.slice(1);
 
+	const documentTitle = `${categoryTitle} | Blog - navelorange1999`;
+
 	return (
 		<div>
 			<Heading>
@@ -67,6 +69,7 @@ const Category = ({posts}: {posts: BlogDirectory}) => {
 					content={`navelorange1999's posts on ${categoryTitle}`}
 				/>
 			</Heading>
+			<h1>{documentTitle}</h1>
 			<ul>
 				{posts.map((item) => (
 					<li key={item.slug}>
